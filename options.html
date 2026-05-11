@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title data-i18n="opt_title">DeepSeek Balance - Settings</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      padding: 32px;
+      max-width: 520px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 20px;
+      margin-bottom: 24px;
+      color: #1a1a1a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    h1::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 20px;
+      background: #4f6ef7;
+      border-radius: 2px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #555;
+    }
+    .hint {
+      font-size: 12px;
+      color: #999;
+      margin-top: 4px;
+    }
+    input[type="text"],
+    input[type="password"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    input:focus, select:focus {
+      border-color: #4f6ef7;
+    }
+    .api-key-wrapper {
+      position: relative;
+    }
+    .api-key-wrapper input {
+      padding-right: 40px;
+    }
+    .toggle-visibility {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      color: #999;
+      padding: 4px;
+    }
+    .toggle-visibility:hover { color: #555; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: #4f6ef7;
+      color: #fff;
+    }
+    .btn-primary:hover { background: #3d5bd9; }
+    .btn-secondary {
+      background: #e8e8e8;
+      color: #555;
+      margin-left: 8px;
+    }
+    .btn-secondary:hover { background: #ddd; }
+    .actions {
+      display: flex;
+      align-items: center;
+      margin-top: 24px;
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #4CAF50;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .toast.error { background: #F44336; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 data-i18n="opt_heading">DeepSeek Balance Settings</h1>
+
+    <div class="form-group">
+      <label for="apiKey" data-i18n="opt_api_key_label">API Key</label>
+      <div class="api-key-wrapper">
+        <input type="password" id="apiKey" placeholder="sk-xxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+        <button class="toggle-visibility" id="toggleKey" data-i18n-title="opt_toggle_visibility" title="Show/Hide">&#128065;</button>
+      </div>
+      <div class="hint" data-i18n="opt_api_key_hint">Create an API Key at <a href="https://platform.deepseek.com/api_keys" target="_blank">DeepSeek Platform</a></div>
+    </div>
+
+    <div class="form-group">
+      <label for="currency" data-i18n="opt_currency_label">Display Currency</label>
+      <select id="currency">
+        <option value="CNY" data-i18n="opt_currency_cny">CNY</option>
+        <option value="USD" data-i18n="opt_currency_usd">USD</option>
+      </select>
+      <div class="hint" data-i18n="opt_currency_hint">Only effective when multiple currencies are available in your account. No exchange rate conversion.</div>
+    </div>
+
+    <div class="form-group">
+      <label for="refreshInterval" data-i18n="opt_interval_label">Refresh Interval (minutes)</label>
+      <input type="number" id="refreshInterval" min="1" max="1440" value="30">
+      <div class="hint" data-i18n="opt_interval_hint">Recommended 10-60 min, minimum 1 min</div>
+    </div>
+
+    <div class="form-group">
+      <label for="language" data-i18n="opt_language_label">Language</label>
+      <select id="language">
+        <option value="" data-i18n="opt_language_auto">Auto (Browser Default)</option>
+        <option value="en" data-i18n="opt_language_en">English</option>
+        <option value="zh" data-i18n="opt_language_zh">中文</option>
+      </select>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="saveBtn" data-i18n="opt_save_btn">Save Settings</button>
+      <button class="btn btn-secondary" id="testBtn" data-i18n="opt_test_btn">Test Connection</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script type="module" src="options.js"></script>
+</body>
+</html>

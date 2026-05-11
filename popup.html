@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      width: 320px;
+      background: #fff;
+      color: #333;
+    }
+    .header {
+      background: linear-gradient(135deg, #4f6ef7, #6c5ce7);
+      color: #fff;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h1 {
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .header-actions {
+      display: flex;
+      gap: 6px;
+    }
+    .header-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: #fff;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .header-btn:hover { background: rgba(255,255,255,0.35); }
+    .header-btn.spinning { animation: spin 1s linear infinite; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .no-key {
+      padding: 32px 16px;
+      text-align: center;
+      color: #999;
+    }
+    .no-key a {
+      color: #4f6ef7;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .balance-card {
+      padding: 16px;
+    }
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .status-dot.available { background: #4CAF50; }
+    .status-dot.unavailable { background: #F44336; }
+    .status-text {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .currency-section {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 10px;
+    }
+    .currency-header {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .total-balance {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+    }
+    .balance-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .detail-item {
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .detail-label {
+      font-size: 11px;
+      color: #999;
+      margin-bottom: 2px;
+    }
+    .detail-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .footer {
+      padding: 10px 16px;
+      border-top: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .update-time {
+      font-size: 11px;
+      color: #bbb;
+    }
+
+    .error-box {
+      padding: 16px;
+      text-align: center;
+      color: #F44336;
+      font-size: 13px;
+    }
+
+    .loading {
+      padding: 32px 16px;
+      text-align: center;
+      color: #999;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1 data-i18n="pop_title">DeepSeek Balance</h1>
+    <div class="header-actions">
+      <button class="header-btn" id="refreshBtn" data-i18n-title="pop_refresh_title" title="Refresh">&#8635;</button>
+      <button class="header-btn" id="settingsBtn" data-i18n-title="pop_settings_title" title="Settings">&#9881;</button>
+    </div>
+  </div>
+
+  <div id="content">
+    <div class="loading" data-i18n="pop_loading">Loading balance...</div>
+  </div>
+
+  <div class="footer">
+    <span class="update-time" id="updateTime"></span>
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
